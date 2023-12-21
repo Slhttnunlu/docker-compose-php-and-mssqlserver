@@ -1,14 +1,8 @@
-# Base Microsoft SQL Server image
 FROM mcr.microsoft.com/mssql/server:2019-latest
-# Environment variables
 ENV ACCEPT_EULA=Y \
     SA_PASSWORD=Un!q@to2023
-# Expose port
 EXPOSE 1433
-# DB create scrit
 COPY init.sql /docker-entrypoint-initdb.d/
 ENTRYPOINT ["/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Un!q@to2023", "-d", "master", "-i", "/docker-entrypoint-initdb.d/init.sql"]
-# Run the SQL Server service
 # CMD ["/opt/mssql/bin/sqlservr"]
-# Run SQL Server and execute the script
 # CMD /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Un!q@to2023 -d master -i init.sql
